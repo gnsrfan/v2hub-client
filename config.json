@@ -1,0 +1,99 @@
+{
+    "log": {
+        "access": "",
+        "error": "",
+        "loglevel": "error"
+    },
+    "inbounds": [
+        {
+            "tag": "socks-in",
+            "port": 1080,
+            "listen": "::",
+            "protocol": "socks",
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "ip": "127.0.0.1"
+            }
+        },
+        {
+            "tag": "http-in",
+            "port": 8123,
+            "listen": "::",
+            "protocol": "http"
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "vmess",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "mkhx.ircf.space",
+                        "port": 2096,
+                        "users": [
+                            {
+                                "email": "user@v2ray.com",
+                                "id": "b33f4332-ad10-49e1-cb2b-2a0315bf9666",
+                                "alterId": 5,
+                                "security": "auto"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": true,
+                    "serverName": "www.onlinejelicc.net"
+                },
+                "wsSettings": {
+                    "connectionReuse": true,
+                    "path": "/Rfan.cloud.net",
+                    "headers": {
+                        "Host": "www.onlinejelicc.net"
+                    }
+                }
+            },
+            "mux": {
+                "enabled": true
+            },
+            "tag": "proxy"
+        },
+        {
+            "protocol": "freedom",
+            "tag": "direct",
+            "settings": {
+                "domainStrategy": "UseIP"
+            }
+        }
+    ],
+    "dns": {
+        "servers": [
+            "1.0.0.1",
+            "localhost"
+        ]
+    },
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:private",
+                    "geoip:cn"
+                ],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:cn"
+                ],
+                "outboundTag": "direct"
+            }
+        ]
+    }
+}
