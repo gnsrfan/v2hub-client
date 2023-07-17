@@ -10,6 +10,7 @@ import myip
 import re
 import webbrowser
 
+
 pyglet.font.add_file('f.ttf')
 url = "https://t.me/v2hub_xyz"
 
